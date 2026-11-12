@@ -1,12 +1,12 @@
 {
   "studio": {
-    "version": "2.5.2",
+    "version": "2.6.1",
     "url": "https://firstdaystudio.app/#download",
-    "notes": "Wording now matches the current product names (audience screen, FirstDay Sites). 2.5.1 shows Sites birthdays and anniversaries as a day, e.g. Sat, Nov 14."
+    "notes": "New: FirstDay Slides, a free presentation app whose presentations come into Display Pro through FirstDay Sites (2.6.0). 2.6.1: 'audience screens' wording everywhere, clipped fields fixed, and new boards hide picture slides until they have a picture."
   },
   "lite": {
-    "version": "2.5.2",
+    "version": "2.6.1",
     "url": "https://firstdaystudio.app/#download",
-    "notes": "Wording now matches the current product names (audience screen, FirstDay Sites). 2.5.1 shows Sites birthdays and anniversaries as a day, e.g. Sat, Nov 14."
+    "notes": "'Audience screen' wording everywhere, the phone dialog names Display Lite, the QR slide is called 'Your visitor QR code', clipped fields fixed, and new boards hide picture slides until they have a picture."
   }
 }
