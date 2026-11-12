@@ -1,12 +1,12 @@
 {
   "studio": {
-    "version": "2.5.1",
+    "version": "2.5.2",
     "url": "https://firstdaystudio.app/#download",
-    "notes": "Birthdays and anniversaries from FirstDay Sites now show the day (Sat, Nov 14) instead of 2026-11-14. 2.5.0 added the FirstDay Sites link."
+    "notes": "Wording now matches the current product names (audience screen, FirstDay Sites). 2.5.1 shows Sites birthdays and anniversaries as a day, e.g. Sat, Nov 14."
   },
   "lite": {
-    "version": "2.5.1",
+    "version": "2.5.2",
     "url": "https://firstdaystudio.app/#download",
-    "notes": "Birthdays and anniversaries from FirstDay Sites now show the day (Sat, Nov 14) instead of 2026-11-14. 2.5.0 added the FirstDay Sites link."
+    "notes": "Wording now matches the current product names (audience screen, FirstDay Sites). 2.5.1 shows Sites birthdays and anniversaries as a day, e.g. Sat, Nov 14."
   }
 }
