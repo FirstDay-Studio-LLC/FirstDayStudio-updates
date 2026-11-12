@@ -1,12 +1,12 @@
 {
   "studio": {
-    "version": "2.5.0",
+    "version": "2.5.1",
     "url": "https://firstdaystudio.app/#download",
-    "notes": "Link this PC to FirstDay Sites: approved announcements, the urgent notice, events, birthdays, new members and prayer names come to your screens on their own."
+    "notes": "Birthdays and anniversaries from FirstDay Sites now show the day (Sat, Nov 14) instead of 2026-11-14. 2.5.0 added the FirstDay Sites link."
   },
   "lite": {
-    "version": "2.5.0",
+    "version": "2.5.1",
     "url": "https://firstdaystudio.app/#download",
-    "notes": "Link this PC to FirstDay Sites: approved announcements, the urgent notice, events, birthdays, new members and prayer names come to your screens on their own."
+    "notes": "Birthdays and anniversaries from FirstDay Sites now show the day (Sat, Nov 14) instead of 2026-11-14. 2.5.0 added the FirstDay Sites link."
   }
 }
