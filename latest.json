@@ -1,12 +1,12 @@
 {
   "studio": {
-    "version": "2.6.2",
+    "version": "2.6.3",
     "url": "https://firstdaystudio.app/#download",
-    "notes": "Security update: screens that aren't signed in no longer receive announcements or slides outside their show dates, and the email sender check only trusts your mail provider's own verification."
+    "notes": "Wording update: the editor, screen check and setup pages now say \"audience screen\" everywhere, and the picture hint matches the \"Hide picture slides\" setting."
   },
   "lite": {
-    "version": "2.6.2",
+    "version": "2.6.3",
     "url": "https://firstdaystudio.app/#download",
-    "notes": "Security update: screens that aren't signed in no longer receive announcements or slides outside their show dates, and the email sender check only trusts your mail provider's own verification."
+    "notes": "Wording update: the certificate page and slide editor now say \"audience screen\" everywhere, and the picture hint matches the \"Hide picture slides\" setting."
   }
 }
