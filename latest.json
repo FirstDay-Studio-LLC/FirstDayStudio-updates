@@ -1,12 +1,12 @@
 {
   "studio": {
-    "version": "2.6.1",
+    "version": "2.6.2",
     "url": "https://firstdaystudio.app/#download",
-    "notes": "New: FirstDay Slides, a free presentation app whose presentations come into Display Pro through FirstDay Sites (2.6.0). 2.6.1: 'audience screens' wording everywhere, clipped fields fixed, and new boards hide picture slides until they have a picture."
+    "notes": "Security update: screens that aren't signed in no longer receive announcements or slides outside their show dates, and the email sender check only trusts your mail provider's own verification."
   },
   "lite": {
-    "version": "2.6.1",
+    "version": "2.6.2",
     "url": "https://firstdaystudio.app/#download",
-    "notes": "'Audience screen' wording everywhere, the phone dialog names Display Lite, the QR slide is called 'Your visitor QR code', clipped fields fixed, and new boards hide picture slides until they have a picture."
+    "notes": "Security update: screens that aren't signed in no longer receive announcements or slides outside their show dates, and the email sender check only trusts your mail provider's own verification."
   }
 }
