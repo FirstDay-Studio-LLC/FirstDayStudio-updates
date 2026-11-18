@@ -1,12 +1,12 @@
 {
   "studio": {
-    "version": "2.6.3",
+    "version": "2.7.0",
     "url": "https://firstdaystudio.app/#download",
-    "notes": "Wording update: the editor, screen check and setup pages now say \"audience screen\" everywhere, and the picture hint matches the \"Hide picture slides\" setting."
+    "notes": "License renewals arrive by themselves: when the license is close to its end date, Display Pro picks up the renewed code from the FirstDay website. The seller is now First Day Studio LLC."
   },
   "lite": {
-    "version": "2.6.3",
+    "version": "2.7.0",
     "url": "https://firstdaystudio.app/#download",
-    "notes": "Wording update: the certificate page and slide editor now say \"audience screen\" everywhere, and the picture hint matches the \"Hide picture slides\" setting."
+    "notes": "An About line in the account window (the person button), and the seller is now First Day Studio LLC."
   }
 }
