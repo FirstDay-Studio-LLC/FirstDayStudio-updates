@@ -22,6 +22,7 @@ Tell churches running Display Pro or Lite that a newer version exists, with a li
 
 - This repository belongs to the **FirstDay-Studio-LLC** GitHub organization (moved from the owner's personal account in Nov 2026). Use `FirstDay-Studio-LLC/FirstDayStudio-updates` in links.
 - **This repository is public, has no workflows, and must never run jobs on the organization's self-hosted runners.** The organization's runner group must not allow public repositories. Runner names, labels and where each fact comes from are kept in the private repositories' plans (for example `FirstDayStudio`), not here, because this repository is public.
+- For reference: the self-hosted runners are **organization runners, not repository runners**. Each one serves every private repository in the organization, so jobs from different repositories wait in line behind each other. Workflows select them by label in `runs-on`. One is a Windows machine (Windows builds and tests, Android builds and emulator tests), the other a Mac (iOS and macOS builds and simulator tests). Source: the runner tables in the private repositories' plans, which cite workflow job records from Nov 21–22, 2026. Whether the runner group really blocks public repositories could not be checked through GitHub (the organization runner API is blocked for Claude): **Not verified**; the owner should check it.
 - If a check is ever added here (for example JSON validation), it runs on GitHub-hosted `ubuntu-latest` only.
 
 ## 4. Engineering principles and invariants
