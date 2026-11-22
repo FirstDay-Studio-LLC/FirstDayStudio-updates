@@ -1,12 +1,12 @@
 {
   "studio": {
-    "version": "2.7.0",
+    "version": "2.8.0",
     "url": "https://firstdaystudio.app/#download",
-    "notes": "License renewals arrive by themselves: when the license is close to its end date, Display Pro picks up the renewed code from the FirstDay website. The seller is now First Day Studio LLC."
+    "notes": "Music notation with the words: import a MusicXML file (from MuseScore, Finale, Sibelius, Dorico or a hymnal website) and the audience screens show the notes with the words under them, one verse at a time or like a hymnal page, with optional shape notes."
   },
   "lite": {
-    "version": "2.7.0",
+    "version": "2.8.0",
     "url": "https://firstdaystudio.app/#download",
-    "notes": "An About line in the account window (the person button), and the seller is now First Day Studio LLC."
+    "notes": "Version number only, to match Display Pro 2.8.0. Nothing else changes in Display Lite."
   }
 }
