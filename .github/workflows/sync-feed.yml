@@ -1,0 +1,43 @@
+# Moves latest.json forward when firstdaystudio.app serves a newer Display Pro or Display Lite installer
+# (tools/sync-feed.mjs). It downloads the new file from the site and checks its size and SHA-256 first, so the
+# apps' "Update X.Y.Z" button only appears once churches can really download that version.
+# Runs every 30 minutes and by hand (Actions > Update feed > Run workflow). Free: this repository is public.
+# Note: GitHub pauses scheduled workflows in a repository with no activity for 60 days; each feed change counts as
+# activity. If it is ever paused, Actions shows a button to turn it back on.
+name: Update feed
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+concurrency:
+  group: update-feed
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Compare the site's manifest with latest.json
+        id: sync
+        run: |
+          set -o pipefail
+          node tools/sync-feed.mjs | tee sync.log
+          echo "result=$(tail -n 1 sync.log)" >> "$GITHUB_OUTPUT"
+      - name: Commit the new feed
+        # Also after a problem with one edition (the step above fails then), so the other edition still moves forward.
+        if: always() && steps.sync.outputs.result == 'changed'
+        run: |
+          python3 -m json.tool latest.json > /dev/null
+          git config user.name "github-actions[bot]"
+          git config user.email "41898499+github-actions[bot]@users.noreply.github.com"
+          git add latest.json
+          git commit -m "Feed: $(node -p "const f=require('./latest.json'); 'Display Pro ' + f.studio.version + ', Display Lite ' + f.lite.version") (installers checked on firstdaystudio.app)"
+          git push origin HEAD:main
