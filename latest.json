@@ -1,4 +1,9 @@
 {
+  "pro": {
+    "version": "2.8.0",
+    "url": "https://firstdaystudio.app/#download",
+    "notes": "Music notation with the words: import a MusicXML file (from MuseScore, Finale, Sibelius, Dorico or a hymnal website) and the audience screens show the notes with the words under them, one verse at a time or like a hymnal page, with optional shape notes."
+  },
   "studio": {
     "version": "2.8.0",
     "url": "https://firstdaystudio.app/#download",

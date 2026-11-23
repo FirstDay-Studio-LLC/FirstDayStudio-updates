@@ -1,5 +1,5 @@
 # Sends a release's installers to firstdaystudio.app (the website's FirstDay Downloads plugin).
-# Called by the release workflows in FirstDayStudio, FirstDayStudioLite and FirstDaySites, after their release is
+# Called by the release workflows in FirstDayDisplayPro, FirstDayStudioLite and FirstDaySites, after their release is
 # published:
 #
 #   site:
