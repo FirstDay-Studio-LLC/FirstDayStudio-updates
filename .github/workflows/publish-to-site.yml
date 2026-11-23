@@ -1,0 +1,114 @@
+# Sends a release's installers to firstdaystudio.app (the website's FirstDay Downloads plugin).
+# Called by the release workflows in FirstDayStudio, FirstDayStudioLite and FirstDaySites, after their release is
+# published:
+#
+#   site:
+#     needs: publish
+#     uses: FirstDay-Studio-LLC/FirstDayStudio-updates/.github/workflows/publish-to-site.yml@main
+#     with:
+#       app: pro                      # pro, lite, slides or uploader
+#       tag: v2.8.1
+#       version: 2.8.1
+#       files: |                      # one line per file: platform and the release file's name (a * is allowed)
+#         win FirstDayDisplayPro-Setup-2.8.1-licensed.exe
+#     secrets:
+#       SITE_PUBLISH_KEY: ${{ secrets.SITE_PUBLISH_KEY }}
+#
+# The private key is the repository secret SITE_PUBLISH_KEY (made on the website: Settings > FirstDay Downloads).
+# Without it the job only prints a notice, so a release never fails because of the website.
+# Every request is signed; the site checks the size, SHA-256 and file type before anything goes live, and keeps
+# what it served before if anything is wrong. The update feed (latest.json) is moved forward afterwards by this
+# repository's "Update feed" workflow, once the new file can be downloaded from the site.
+name: Publish to the website
+on:
+  workflow_call:
+    inputs:
+      app:
+        type: string
+        required: true
+      tag:
+        type: string
+        required: true
+      version:
+        type: string
+        required: true
+      files:
+        type: string
+        required: true
+      site:
+        type: string
+        default: https://firstdaystudio.app
+    secrets:
+      SITE_PUBLISH_KEY:
+        required: false
+permissions:
+  contents: read
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Publishing key
+        id: key
+        env:
+          KEY: ${{ secrets.SITE_PUBLISH_KEY }}
+        run: |
+          if [ -z "$KEY" ]; then
+            echo "::notice::SITE_PUBLISH_KEY is not set in this repository, so nothing was sent to the website. Make it on the website (Settings > FirstDay Downloads) and add it under Settings > Secrets and variables > Actions."
+            echo "have=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "have=yes" >> "$GITHUB_OUTPUT"
+          fi
+      - name: The publishing script
+        if: steps.key.outputs.have == 'yes'
+        uses: actions/checkout@v4
+        with:
+          repository: FirstDay-Studio-LLC/FirstDayStudio-updates
+          ref: main
+          path: .fdd
+          sparse-checkout: tools
+          persist-credentials: false
+      - name: Download the release files (checked against GitHub's SHA-256 for each file)
+        if: steps.key.outputs.have == 'yes'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+          VERSION: ${{ inputs.version }}
+          FILES: ${{ inputs.files }}
+        run: |
+          set -euo pipefail
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::version '$VERSION' is not like 2.8.1"; exit 1; }
+          mkdir -p dist
+          gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG" > release.json
+          jq -r '.body // ""' release.json > notes.md
+          # The date churches see: the day the release was published, in Central time.
+          TZ=America/Chicago date -d "$(jq -r .published_at release.json)" +%F > date.txt
+          : > list.txt
+          while read -r platform pattern; do
+            [ -n "${platform:-}" ] || continue
+            [[ "$platform" =~ ^(win|mac)$ ]] || { echo "::error::platform '$platform' must be win or mac"; exit 1; }
+            names=$(jq -r --arg p "$pattern" '.assets[].name | select(test("^" + ($p | gsub("[.]"; "\\.") | gsub("[*]"; ".*")) + "$"))' release.json)
+            [ "$(printf '%s\n' "$names" | grep -c .)" = 1 ] || { echo "::error::'$pattern' must match exactly one file on release $TAG (found: ${names:-none})"; exit 1; }
+            gh release download "$TAG" -R "$GITHUB_REPOSITORY" -p "$names" -D dist --clobber
+            want=$(jq -r --arg n "$names" '.assets[] | select(.name == $n) | .digest // ""' release.json)
+            got="sha256:$(sha256sum "dist/$names" | cut -d' ' -f1)"
+            if [ -n "$want" ] && [ "$want" != "$got" ]; then echo "::error::$names does not match GitHub's SHA-256"; exit 1; fi
+            echo "$platform dist/$names" >> list.txt
+          done <<< "$FILES"
+          cat list.txt
+      - name: Send to the website
+        if: steps.key.outputs.have == 'yes'
+        env:
+          SITE_PUBLISH_KEY: ${{ secrets.SITE_PUBLISH_KEY }}
+          APP: ${{ inputs.app }}
+          TAG: ${{ inputs.tag }}
+          VERSION: ${{ inputs.version }}
+          SITE: ${{ inputs.site }}
+        run: |
+          set -euo pipefail
+          while read -r platform file; do
+            node .fdd/tools/publish-to-site.mjs --site "$SITE" --app "$APP" --platform "$platform" --version "$VERSION" \
+              --file "$file" --date "$(cat date.txt)" --notes-file notes.md --tag "$TAG" --repo "$GITHUB_REPOSITORY"
+          done < list.txt
+          echo "### Sent to $SITE" >> "$GITHUB_STEP_SUMMARY"
+          sed 's/^/- /' list.txt >> "$GITHUB_STEP_SUMMARY"
