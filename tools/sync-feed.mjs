@@ -8,7 +8,9 @@
 import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
 
-const FEED = { studio: 'pro', lite: 'lite' }; // latest.json key -> app in the site's manifest
+// latest.json key -> app in the site's manifest. Display Pro is "pro"; "studio" is the same entry under its earlier name,
+// kept for copies from before the rename (2.8.0 and older read it).
+const FEED = { pro: 'pro', studio: 'pro', lite: 'lite' };
 const MAX = 800 * 1024 * 1024;
 
 const opt = Object.fromEntries(process.argv.slice(2).reduce((a, v, i, all) => (i % 2 ? a : [...a, [v.replace(/^--/, ''), all[i + 1]]]), []));
